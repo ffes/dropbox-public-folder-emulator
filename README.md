@@ -32,15 +32,15 @@ It can probably run on any webserver or cloud service, but I haven't tested
 that at all.
 
 Setup the OAuth authentication and select a directory where all the 
-downloadable files live, defaults to `/Public`.
+downloadable files live, defaults to `/Apps/PublicFolderEmulator`.
 
 You manually create a URL for the file to download, like: 
 http://downloads.example.com/dir/file.ext
 
 This URL/request is parsed by the Python script and the full filename is 
-given to the API. The API gives a URL of the downloadable file.
+given to the Dropbox-API. The API returns the URL of the downloadable file.
 
-`/Public/dir/file.ext` will be translated to https://www.dropbox.com/s/Som3R4ndomH4sh/file.ext?dl=1
+`/Apps/PublicFolderEmulator/dir/file.ext` will be translated to https://www.dropbox.com/s/Som3R4ndomH4sh/file.ext?dl=1
 
 This is new URL given to nginx that return a HTTP status 302 with this new URL.
 
@@ -52,6 +52,12 @@ Make sure Python 3 is installed.
 
 ```bash
 sudo apt install python3
+```
+
+In `/opt` clone the git repository.
+
+```
+git clone https://github.com/ffes/dropbox-public-folder-emulator.git
 ```
 
 In `/etc/nginx/XXX.conf` add the following lines:
@@ -67,8 +73,10 @@ To setup OAuth you need to do the next steps:
 * Go to https://www.dropbox.com/developers/apps and log in with your account.
 * Click on the **Create App** button and then select **Dropbox API app**.
 * Now go on with the configuration and choose **App folder**.
-* Enter the **App Name** that you prefer (e.g. MyPythonProxy).
+* Enter the **App Name** that you prefer (e.g. `PublicFolderEmulator`).
 * Accept the terms and click on the **Create App** button.
 * When your new App is successfully created, please click on the Generate button 
   under the **Generated access token** section, then copy and paste the new access token 
   in `conf.py`.
+* There is no need to change the App status from `Development` to `Production` 
+  because you (aka your webserver) will the only user.

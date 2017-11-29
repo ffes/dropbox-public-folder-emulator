@@ -8,5 +8,5 @@
 # The OAuth token manually generated in your account
 oauth_token = ""
 
-# The folder where the public files are stored
-public_folder = "/Public"
+# The folder in Dropbox where the public files are stored
+public_folder = "/Apps/PublicFolderEmulator"
